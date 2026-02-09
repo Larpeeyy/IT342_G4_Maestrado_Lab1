@@ -1,0 +1,272 @@
+
+:root {
+  --bg: #f6f8fc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e5e7eb;
+
+  --blue: #2563eb;
+  --blue2: #1d4ed8;
+
+  --green: #16a34a;
+  --green2: #15803d;
+
+  --red: #dc2626;
+  --red2: #b91c1c;
+
+  --sidebar: #0b1b3a;
+  --sidebar2: #0a254f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Layout */
+.shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: linear-gradient(180deg, var(--sidebar), var(--sidebar2));
+  color: #fff;
+  padding: 18px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+
+.brandText {
+  display: grid;
+  gap: 4px;
+}
+
+.brandTitle {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.brandSub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+
+.nav {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.navBtn {
+  width: 100%;
+  border: 0;
+  padding: 12px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-weight: 700;
+  text-align: left;
+}
+
+.navBtn:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+.navBtnActive {
+  background: rgba(37, 99, 235, 0.7);
+}
+
+.navBtnActive:hover {
+  background: rgba(37, 99, 235, 0.85);
+}
+
+.logoutBtn {
+  width: 100%;
+  border: 0;
+  padding: 12px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--red);
+  color: #fff;
+  font-weight: 800;
+  margin-top: auto;
+}
+
+.logoutBtn:hover {
+  background: var(--red2);
+}
+
+/* Main */
+.main {
+  padding: 22px;
+}
+
+.topbar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.topTitle {
+  display: grid;
+  gap: 3px;
+}
+
+.h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.sub {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.pill {
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Content card */
+.contentCard {
+  margin-top: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* Form */
+.form {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+  max-width: 520px;
+}
+
+.label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.btnGreen {
+  border: 0;
+  padding: 11px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--green);
+  color: #fff;
+  font-weight: 800;
+  flex: 1;
+}
+
+.btnGreen:hover {
+  background: var(--green2);
+}
+
+.btnBlue {
+  border: 0;
+  padding: 11px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  flex: 1;
+}
+
+.btnBlue:hover {
+  background: var(--blue2);
+}
+
+.error {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #7f1d1d;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.success {
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #14532d;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    height: auto;
+    position: relative;
+  }
+}
