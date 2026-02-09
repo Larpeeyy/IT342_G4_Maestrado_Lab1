@@ -1,4 +1,3 @@
-// FILE: backend/src/main/java/com/example/miniapplication/security/SecurityConfig.java
 package com.example.miniapplication.security;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class SecurityConfig {
         .cors(cors -> cors.configurationSource(req -> {
           CorsConfiguration cfg = new CorsConfiguration();
           cfg.setAllowedOrigins(List.of("http://localhost:3000"));
-          cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+          cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
           cfg.setAllowedHeaders(List.of("*"));
           cfg.setAllowCredentials(false);
           return cfg;
