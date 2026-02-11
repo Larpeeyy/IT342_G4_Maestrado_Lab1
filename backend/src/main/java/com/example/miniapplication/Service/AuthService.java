@@ -1,3 +1,4 @@
+// FILE: backend/src/main/java/com/example/miniapplication/Service/AuthService.java
 package com.example.miniapplication.Service;
 
 import com.example.miniapplication.Entity.User;
@@ -24,35 +25,55 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest req) {
-        String email = req.email.trim().toLowerCase();
-        String username = req.username.trim();
+        String email = req.getEmail().trim().toLowerCase();
 
-        if (userRepo.existsByEmail(email))
-            throw new IllegalArgumentException("Email already used");
-        if (userRepo.existsByUsername(username))
-            throw new IllegalArgumentException("Username already used");
+        if (userRepo.existsByEmail(email)) {
+            throw new RuntimeException("Email already used");
+        }
 
-        User u = new User();
-        u.setEmail(email);
-        u.setUsername(username);
-        u.setPasswordHash(encoder.encode(req.password));
-        userRepo.save(u);
+        User user = new User();
+        user.setEmail(email);
+        user.setUsername(req.getUsername().trim());
+        user.setPasswordHash(encoder.encode(req.getPassword())); // ✅ FIX: password_hash
+        user.setFirstName(req.getFirstName().trim());
+        user.setLastName(req.getLastName().trim());
 
-        String token = jwt.generateToken(u.getEmail());
-        return new AuthResponse(token, new UserResponse(u.getId(), u.getUsername(), u.getEmail()));
+        userRepo.save(user);
+
+        String token = jwt.generateToken(user.getEmail());
+
+        UserResponse userResponse = new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName()
+        );
+
+        return new AuthResponse(token, userResponse);
     }
 
     public AuthResponse login(LoginRequest req) {
-        String email = req.email.trim().toLowerCase();
+        String email = req.getEmail().trim().toLowerCase();
 
-        User u = userRepo.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
-        if (!encoder.matches(req.password, u.getPasswordHash())) {
-            throw new IllegalArgumentException("Invalid credentials");
+        // ✅ FIX: compare against password_hash
+        if (!encoder.matches(req.getPassword(), user.getPasswordHash())) {
+            throw new RuntimeException("Invalid email or password");
         }
 
-        String token = jwt.generateToken(u.getEmail());
-        return new AuthResponse(token, new UserResponse(u.getId(), u.getUsername(), u.getEmail()));
+        String token = jwt.generateToken(user.getEmail());
+
+        UserResponse userResponse = new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName()
+        );
+
+        return new AuthResponse(token, userResponse);
     }
 }

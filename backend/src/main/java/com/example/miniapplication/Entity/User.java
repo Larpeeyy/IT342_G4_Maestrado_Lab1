@@ -1,60 +1,53 @@
+// FILE: backend/src/main/java/com/example/miniapplication/Entity/User.java
 package com.example.miniapplication.Entity;
 
 import jakarta.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email"),
-        @UniqueConstraint(columnNames = "username")
-})
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // ✅ uses column "id" by default
 
-    @Column(nullable = false, length = 50)
-    private String username;
-
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false)
+    private String username;
+
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
-    @Column(nullable = false)
-    private Instant createdAt = Instant.now();
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-    public String getUsername() {
-        return username;
-    }
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    // GETTERS & SETTERS
+    public Long getId() { return id; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

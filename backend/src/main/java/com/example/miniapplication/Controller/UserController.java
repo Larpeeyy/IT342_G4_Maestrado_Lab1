@@ -24,17 +24,34 @@ public class UserController {
 
     @GetMapping("/me")
     public UserResponse me(Authentication auth) {
-        String email = (String) auth.getPrincipal();
+        String email = auth.getName(); // safest + consistent
         User u = userRepo.findByEmail(email).orElseThrow();
-        return new UserResponse(u.getId(), u.getUsername(), u.getEmail());
+
+        return new UserResponse(
+                u.getId(),
+                u.getUsername(),
+                u.getEmail(),
+                u.getFirstName(),
+                u.getLastName()
+        );
     }
 
     @PatchMapping("/me/username")
     public ResponseEntity<UserResponse> updateUsername(
             Authentication auth,
-            @Valid @RequestBody UpdateUsernameRequest req) {
-        String email = (String) auth.getPrincipal();
+            @Valid @RequestBody UpdateUsernameRequest req
+    ) {
+        String email = auth.getName(); // FIX: don't cast principal
         User updated = userService.updateUsername(email, req.username);
-        return ResponseEntity.ok(new UserResponse(updated.getId(), updated.getUsername(), updated.getEmail()));
+
+        return ResponseEntity.ok(
+                new UserResponse(
+                        updated.getId(),
+                        updated.getUsername(),
+                        updated.getEmail(),
+                        updated.getFirstName(),
+                        updated.getLastName()
+                )
+        );
     }
 }

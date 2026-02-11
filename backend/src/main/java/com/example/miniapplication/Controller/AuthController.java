@@ -1,3 +1,4 @@
+// FILE: backend/src/main/java/com/example/miniapplication/Controller/AuthController.java
 package com.example.miniapplication.Controller;
 
 import com.example.miniapplication.Service.AuthService;
