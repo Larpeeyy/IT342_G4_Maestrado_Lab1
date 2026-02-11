@@ -1,3 +1,4 @@
+// FILE: web/src/pages/Register.js
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../api/auth";
@@ -5,7 +6,10 @@ import "./Auth.css";
 
 export default function Register() {
   const nav = useNavigate();
+
   const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +20,13 @@ export default function Register() {
       const res = await fetch("http://localhost:8080/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password })
+        body: JSON.stringify({
+          username,
+          firstName,
+          lastName,
+          email,
+          password
+        })
       });
 
       const text = await res.text();
@@ -34,6 +44,7 @@ export default function Register() {
       }
 
       nav("/login", { replace: true });
+
     } catch (err) {
       alert("Cannot connect to backend. Make sure backend is running on 8080.");
     }
@@ -46,6 +57,7 @@ export default function Register() {
         <p className="auth-subtitle">Create your account.</p>
 
         <form className="auth-form" onSubmit={submit}>
+
           <label className="auth-label">
             Username
             <input
@@ -53,6 +65,28 @@ export default function Register() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Your username"
+              required
+            />
+          </label>
+
+          <label className="auth-label">
+            First Name
+            <input
+              className="auth-input"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Your first name"
+              required
+            />
+          </label>
+
+          <label className="auth-label">
+            Last Name
+            <input
+              className="auth-input"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Your last name"
               required
             />
           </label>
@@ -76,12 +110,15 @@ export default function Register() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Min 6 characters"
+              placeholder="Minimum 6 characters"
               required
             />
           </label>
 
-          <button className="auth-btn" type="submit">Register</button>
+          <button className="auth-btn" type="submit">
+            Register
+          </button>
+
         </form>
 
         <div className="auth-footer">
